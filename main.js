@@ -53,11 +53,16 @@ ipcMain.handle("dialog:openFile", async () => {
 });
 
 ipcMain.on("launch:exe", (event, filePath) => {
-  execFile(filePath, (error) => {
-    if (error) {
-      console.error(`Error launching executable: ${error}`);
-    }
-  });
+  if (filePath) {
+    const child = spawn(filePath, {
+      detached: true,
+      stdio: "ignore",
+    });
+
+    child.unref();
+  } else {
+    console.error("Invalid file path provided");
+  }
 });
 
 ipcMain.on("open:fileLocation", (event, filePath) => {
