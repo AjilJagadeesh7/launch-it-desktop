@@ -1,0 +1,16 @@
+{
+  "name": "launch-it-desktop",
+  "version": "1.0.0",
+  "description": "An launcher app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Ajil Jagadeesh",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.2",
+    "electron-packager": "^17.1.2"
+  }
+}
