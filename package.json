@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "package-win": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist --icon=assets/app-icon.ico --overwrite"
+    "package-win": "electron-packager . LaunchIt --platform=win32 --arch=x64 --out=dist --icon=favicon.ico --overwrite"
   },
   "author": "Ajil Jagadeesh",
   "license": "MIT",
