@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
-const { execFile, spawn } = require("child_process");
+const { spawn } = require("child_process");
+
 let splashWindow;
 let win;
 
@@ -9,15 +10,16 @@ function createSplashScreen() {
     width: 400,
     height: 300,
     title: "Launch It!",
-    frame: false, // No window controls for splash
+    frame: false,
     alwaysOnTop: true,
     transparent: true,
     resizable: false,
     icon: path.join(__dirname, "logo.png"), // Replace with your icon path
   });
 
-  splashWindow.loadFile(path.join(__dirname, "splash.html")); // Create a simple splash.html
+  splashWindow.loadFile(path.join(__dirname, "splash.html"));
 }
+
 function createWindow() {
   win = new BrowserWindow({
     width: 1200,
@@ -30,18 +32,23 @@ function createWindow() {
       webSecurity: false,
     },
     icon: path.join(__dirname, "logo.png"),
+    show: false, // Initially hide the main window
   });
 
   win.loadURL("https://launch-it-web.netlify.app/");
   win.once("ready-to-show", () => {
     if (splashWindow) {
       splashWindow.close();
+      splashWindow = null;
     }
-    win.show();
+    win.show(); // Show the main window only after the splash screen closes
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createSplashScreen();
+  createWindow();
+});
 
 ipcMain.handle("dialog:openFile", async () => {
   const result = await dialog.showOpenDialog(win, {
